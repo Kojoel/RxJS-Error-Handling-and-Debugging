@@ -6,12 +6,20 @@
         <input type="search" id="search-bar" placeholder="Search advice...">
       </div> -->
       <div class="button-container">
-        <button class="search-btn">Get data</button>
+        <button class="search-btn" (click)="makeHttpRequest()">Get data</button>
       </div>
     </div>
     <div class="search-output-box">
       <div class="search-output">
-        
+        @if(loading) {
+          <div class="loaders">
+            <p class="loader"></p>
+            <p class="loader2">Loading ....</p>
+          </div>
+        }
+        @else if(response) {
+          <p class="resonse">{{ response }}</p>
+        }
       </div>
     </div>
   </div>
