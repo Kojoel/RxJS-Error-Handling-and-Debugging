@@ -18,23 +18,44 @@ export class AppComponent {
 
   loading$ = this.uiStateService.loading$;
   response$ = this.uiStateService.response$;
+  error$ = this.uiStateService.error$;
 
   constructor(
     private httpService: HttpService,
     private uiStateService: UiStateService
+    
   ) {}
+
 
   makeHttpRequest(): void {
     this.uiStateService.setLoadingState(true);
+    this.uiStateService.setError(null); // Reset previous errors
+    this.uiStateService.setResponse(null); // Reset previous responses
+
     this.httpService.getSimulatedHttpRequest().subscribe({
       next: (res) => {
-        this.uiStateService.setResponse(res);
+        this.uiStateService.setResponse(res); // Set response for successful request
         this.uiStateService.setLoadingState(false);
       },
       error: (err) => {
-        this.uiStateService.setResponse(`Request failed: ${err}`);
+        this.uiStateService.setError(`Request failed: ${err}`); // Set error message
         this.uiStateService.setLoadingState(false);
       },
     });
   }
+
+
+  // makeHttpRequest(): void {
+  //   this.uiStateService.setLoadingState(true);
+  //   this.httpService.getSimulatedHttpRequest().subscribe({
+  //     next: (res) => {
+  //       this.uiStateService.setResponse(res);
+  //       this.uiStateService.setLoadingState(false);
+  //     },
+  //     error: (err) => {
+  //       this.uiStateService.setLoadingState(false);
+  //       this.uiStateService.setError(`Request failed: ${err}`);
+  //     },
+  //   });
+  // }
 }

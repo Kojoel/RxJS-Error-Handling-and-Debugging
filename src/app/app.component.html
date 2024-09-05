@@ -16,6 +16,9 @@
         @else if(response$ | async) {
           <p class="resonse">{{ response$ | async }}</p>
         }
+        @else if(error$ | async) {
+          <p class="loader">{{ error$ | async }}</p>
+        }
       </div>
     </div>
   </div>
